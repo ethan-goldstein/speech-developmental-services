@@ -1,0 +1,23 @@
+{
+  "name": "speech-developmental-services",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Speech Developmental Services — Shana Kilcawley, CCC-SLP. Pediatric speech therapy in Arlington, VA and via telehealth.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && cp dist/index.html dist/404.html",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "framer-motion": "^11.11.9",
+    "lenis": "^1.1.16",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^5.4.10"
+  }
+}
