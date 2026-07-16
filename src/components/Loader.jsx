@@ -1,17 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { loadStrokeFont, composeText } from '../lib/handwriting'
+import { prepareStrokePaths } from '../lib/handwriting'
+import { logoTrace } from '../content/logoPaths'
 
-const WRITE_MS = 4200 // time to write the full line
-const NAME_MS = 1900 // pause on "Shana Kilcawley" before revealing the site
-const LIFT_MS = 650 // pen glide-away after the last stroke
+const TRACE_MS = 3400 // time for the pen to trace the logo
+const FILL_MS = 750 // outline → real logo crossfade
+const NAME_MS = 2000 // pause on the name before revealing the site
+const LIFT_MS = 550 // pen glide-away after the last stroke
 
-/* Intro: a 3D fountain pen writes "Speech Language Pathologist" in ink,
-   then "Shana Kilcawley" fades in beneath. Click / key to skip; a hard
-   safety timeout guarantees it can never hang. */
+/* Intro: a 3D fountain pen traces the SDS logo in ink, the outline
+   crossfades into the periwinkle logo, and the practice name fades in
+   beneath. Click / key to skip; a hard safety timeout guarantees it can
+   never hang. */
 export default function Loader({ onDone }) {
   const svgRef = useRef(null)
   const canvasRef = useRef(null)
+  const [filled, setFilled] = useState(false)
   const [nameVisible, setNameVisible] = useState(false)
   const [leaving, setLeaving] = useState(false)
 
@@ -27,55 +31,46 @@ export default function Loader({ onDone }) {
     let finished = false
     let skipped = false
 
-    const finish = () => {
-      if (finished) return
-      finished = true
-      setNameVisible(true)
+    const leave = () => {
       setLeaving(true)
       leaveTimer = setTimeout(() => onDone?.(), 750)
+      finished = true
+    }
+
+    const finish = () => {
+      if (finished) return
+      setFilled(true)
+      setNameVisible(true)
+      leave()
     }
 
     const showName = () => {
       setNameVisible(true)
       nameTimer = setTimeout(() => {
-        setLeaving(true)
-        leaveTimer = setTimeout(() => onDone?.(), 750)
-        finished = true
+        if (!finished) leave()
       }, NAME_MS)
     }
 
     const run = async () => {
-      // three.js is only used here, so load it in parallel with the font
-      // and off the main bundle's critical path.
-      let font
-      let penModule = null
-      try {
-        ;[font, penModule] = await Promise.all([
-          loadStrokeFont(`${import.meta.env.BASE_URL}fonts/SatisfySL.json`),
-          import('../lib/pen3d').catch(() => null),
-        ])
-      } catch {
-        finish() // font missing — never block the site
-        return
-      }
+      // three.js is only used here — keep it off the critical path.
+      const penModule = await import('../lib/pen3d').catch(() => null)
       if (cancelled) return
 
-      const narrow = window.innerWidth < 700
-      composition = composeText(
-        svgRef.current,
-        font,
-        narrow ? ['Speech Language', 'Pathologist'] : ['Speech Language Pathologist'],
-        { scale: 2.3, strokeWidth: 0.55, color: '#1d1d1f' }
-      )
+      composition = prepareStrokePaths(svgRef.current, logoTrace.paths, {
+        viewBox: logoTrace.viewBox,
+        color: '#0f0f10',
+        strokeWidth: 4,
+      })
 
       if (reduced) {
         composition.setProgress(1)
+        setFilled(true)
         showName()
         return
       }
 
       pen = penModule ? penModule.createPenScene(canvasRef.current) : null
-      if (pen) pen.setScale(narrow ? 1.15 : 1.45)
+      if (pen) pen.setScale(window.innerWidth < 700 ? 1.1 : 1.4)
 
       const start = performance.now()
       let liftStart = null
@@ -83,7 +78,7 @@ export default function Loader({ onDone }) {
       const frame = (now) => {
         if (cancelled) return
         const t = now - start
-        const p = Math.min(skipped ? 1 : t / WRITE_MS, 1)
+        const p = Math.min(skipped ? 1 : t / TRACE_MS, 1)
         // Gentle ease so strokes begin and end like a real hand.
         const eased = 0.5 - 0.5 * Math.cos(Math.PI * p)
         const tip = composition.setProgress(eased)
@@ -96,10 +91,14 @@ export default function Loader({ onDone }) {
             else pen.hide()
           }
           pen.render(now)
+        } else if (p >= 1 && liftStart === null) {
+          liftStart = now
         }
-        if (p >= 1 && (now - (liftStart ?? now)) >= LIFT_MS) {
+        if (p >= 1 && liftStart !== null && now - liftStart >= LIFT_MS * 0.4) {
+          setFilled(true)
+        }
+        if (p >= 1 && liftStart !== null && now - liftStart >= LIFT_MS + FILL_MS) {
           if (!finished && !nameTimer) showName()
-          if (pen) pen.render(now)
         }
         raf = requestAnimationFrame(frame)
       }
@@ -110,26 +109,20 @@ export default function Loader({ onDone }) {
 
     const skip = () => {
       if (finished) return
-      if (!composition) {
-        finish()
-        return
-      }
       skipped = true
-      composition.setProgress(1)
+      if (composition) composition.setProgress(1)
       if (pen) pen.hide()
+      setFilled(true)
       if (!nameTimer) {
-        clearTimeout(nameTimer)
         setNameVisible(true)
         nameTimer = setTimeout(() => {
-          setLeaving(true)
-          leaveTimer = setTimeout(() => onDone?.(), 750)
-          finished = true
+          if (!finished) leave()
         }, 700)
       }
     }
     window.addEventListener('keydown', skip)
     window.addEventListener('pointerdown', skip)
-    safety = setTimeout(finish, WRITE_MS + LIFT_MS + NAME_MS + 4000)
+    safety = setTimeout(finish, TRACE_MS + LIFT_MS + FILL_MS + NAME_MS + 4000)
 
     return () => {
       cancelled = true
@@ -153,13 +146,21 @@ export default function Loader({ onDone }) {
     >
       <canvas ref={canvasRef} className="loader-canvas" aria-hidden="true" />
       <div className="loader-stack">
-        <svg ref={svgRef} className="loader-script" aria-hidden="true" />
+        <div className={`loader-logo ${filled ? 'is-filled' : ''}`}>
+          <svg ref={svgRef} className="loader-logo-trace" aria-hidden="true" />
+          <img
+            src={`${import.meta.env.BASE_URL}logo.png`}
+            alt=""
+            className="loader-logo-img"
+            draggable="false"
+          />
+        </div>
         <div className={`loader-name ${nameVisible ? 'is-visible' : ''}`}>
           <span className="loader-name-main">Shana Kilcawley</span>
           <span className="loader-name-sub">CCC-SLP · Speech Developmental Services</span>
         </div>
       </div>
-      <div className="loader-skip">Click anywhere to skip</div>
+      <div className="loader-skip">click anywhere to skip</div>
     </motion.div>
   )
 }

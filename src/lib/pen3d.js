@@ -9,18 +9,19 @@ const FOV = 40
 function buildPen() {
   const pen = new THREE.Group()
 
+  // Monochrome pen: black lacquer body with polished silver trim.
   const navy = new THREE.MeshStandardMaterial({
-    color: 0x2e3a63,
-    metalness: 0.4,
-    roughness: 0.28,
+    color: 0x121216,
+    metalness: 0.55,
+    roughness: 0.22,
   })
   const gold = new THREE.MeshStandardMaterial({
-    color: 0xd8b26a,
-    metalness: 0.9,
-    roughness: 0.28,
+    color: 0xc8ccd6,
+    metalness: 0.95,
+    roughness: 0.22,
   })
   const black = new THREE.MeshStandardMaterial({
-    color: 0x17171a,
+    color: 0x1d1d22,
     metalness: 0.5,
     roughness: 0.35,
   })

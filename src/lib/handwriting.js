@@ -1,7 +1,8 @@
-/* Handwriting composer for Vara-format stroke fonts (single-stroke SVG paths).
-   Lays out lines of text as stroke paths inside an <svg>, and exposes a
+/* Stroke-drawing engine: lays out SVG stroke paths and exposes a
    draw-progress API driven by total stroke length, so an external rAF loop
-   can both animate the ink and know the exact pen-tip position each frame. */
+   can both animate the ink and know the exact pen-tip position each frame.
+   Two front-ends: composeText (Vara-format handwriting fonts) and
+   prepareStrokePaths (raw path data, e.g. the traced logo). */
 
 export async function loadStrokeFont(url) {
   const res = await fetch(url)
@@ -10,6 +11,66 @@ export async function loadStrokeFont(url) {
 }
 
 const SVG_NS = 'http://www.w3.org/2000/svg'
+
+/* Shared timeline: dasharray setup + progress→tip mapping over `paths`. */
+function makeTimeline(paths) {
+  let total = 0
+  const segments = paths.map((el) => {
+    const len = el.getTotalLength()
+    // The +2 / +1 offsets avoid a stray dot artifact with round linecaps.
+    el.style.strokeDasharray = `${len} ${len + 2}`
+    el.style.strokeDashoffset = len + 1
+    const seg = { el, len, start: total }
+    total += len
+    return seg
+  })
+  return {
+    totalLength: total,
+    /* progress: 0..1 of total stroke length. Returns the pen tip in screen
+       (viewport) pixel coordinates, or null when nothing is drawing. */
+    setProgress(progress) {
+      const drawnTotal = progress * total
+      let tip = null
+      for (const seg of segments) {
+        const drawn = Math.min(Math.max(drawnTotal - seg.start, 0), seg.len)
+        seg.el.style.strokeDashoffset =
+          drawn <= 0 ? seg.len + 1 : Math.max(seg.len - drawn, 0)
+        if (drawn > 0 && (drawn < seg.len || drawnTotal <= seg.start + seg.len)) {
+          const pt = seg.el.getPointAtLength(drawn)
+          const ctm = seg.el.getScreenCTM()
+          if (ctm) {
+            const sp = new DOMPoint(pt.x, pt.y).matrixTransform(ctm)
+            tip = { x: sp.x, y: sp.y }
+          }
+        }
+      }
+      return tip
+    },
+  }
+}
+
+/* Build stroke paths from raw `d` strings (already in viewBox coordinates). */
+export function prepareStrokePaths(svg, pathDs, opts = {}) {
+  const strokeWidth = opts.strokeWidth ?? 3
+  const color = opts.color ?? '#0f0f10'
+
+  while (svg.firstChild) svg.removeChild(svg.firstChild)
+  if (opts.viewBox) svg.setAttribute('viewBox', opts.viewBox)
+
+  const paths = pathDs.map((d) => {
+    const p = document.createElementNS(SVG_NS, 'path')
+    p.setAttribute('d', d)
+    p.setAttribute('fill', 'none')
+    p.setAttribute('stroke', color)
+    p.setAttribute('stroke-width', strokeWidth)
+    p.setAttribute('stroke-linecap', 'round')
+    p.setAttribute('stroke-linejoin', 'round')
+    svg.appendChild(p)
+    return p
+  })
+
+  return makeTimeline(paths)
+}
 
 /* Compose `lines` (array of strings) into `svg`. Returns handles for
    animation. Mirrors Vara.js layout: each glyph's paths are offset by
@@ -88,39 +149,5 @@ export function composeText(svg, font, lines, opts = {}) {
     `${minX - pad} ${-pad} ${maxX - minX + pad * 2} ${y + pad * 2}`
   )
 
-  // Per-path stroke lengths → global draw timeline.
-  let total = 0
-  const segments = paths.map((el) => {
-    const len = el.getTotalLength()
-    // The +2 / +1 offsets avoid a stray dot artifact with round linecaps.
-    el.style.strokeDasharray = `${len} ${len + 2}`
-    el.style.strokeDashoffset = len + 1
-    const seg = { el, len, start: total }
-    total += len
-    return seg
-  })
-
-  return {
-    totalLength: total,
-    /* progress: 0..1 of total stroke length. Returns the pen tip in screen
-       (viewport) pixel coordinates, or null when nothing is drawing. */
-    setProgress(progress) {
-      const drawnTotal = progress * total
-      let tip = null
-      for (const seg of segments) {
-        const drawn = Math.min(Math.max(drawnTotal - seg.start, 0), seg.len)
-        seg.el.style.strokeDashoffset =
-          drawn <= 0 ? seg.len + 1 : Math.max(seg.len - drawn, 0)
-        if (drawn > 0 && (drawn < seg.len || drawnTotal <= seg.start + seg.len)) {
-          const pt = seg.el.getPointAtLength(drawn)
-          const ctm = seg.el.getScreenCTM()
-          if (ctm) {
-            const sp = new DOMPoint(pt.x, pt.y).matrixTransform(ctm)
-            tip = { x: sp.x, y: sp.y }
-          }
-        }
-      }
-      return tip
-    },
-  }
+  return makeTimeline(paths)
 }

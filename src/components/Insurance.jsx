@@ -14,7 +14,7 @@ export default function Insurance() {
         <div className="insurer-grid">
           {insurers.map((ins, i) => (
             <Reveal key={ins.name} delay={0.045 * i} className="insurer-badge">
-              <span className="insurer-dot" style={{ background: ins.color }} aria-hidden="true" />
+              <span className="insurer-dot" style={{ '--dot-brand': ins.color }} aria-hidden="true" />
               {ins.name}
             </Reveal>
           ))}
