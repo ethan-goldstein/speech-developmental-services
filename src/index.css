@@ -236,8 +236,8 @@ a {
   opacity: 0;
   transform: translateY(14px);
   transition:
-    opacity 0.5s var(--ease),
-    transform 0.5s var(--ease);
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
 }
 
 .loader-name.is-visible {
