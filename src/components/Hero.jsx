@@ -16,9 +16,6 @@ export default function Hero() {
     <section className="hero" id="top">
       <motion.div className="hero-blob hero-blob--a" style={reduced ? undefined : { y: blobY }} aria-hidden="true" />
       <motion.div className="hero-blob hero-blob--b" style={reduced ? undefined : { y: blobY }} aria-hidden="true" />
-      <div className="hero-dots" aria-hidden="true">
-        <i /><i /><i />
-      </div>
 
       <div className="hero-inner">
         <motion.p className="hero-eyebrow" {...fadeUp(0.05)}>

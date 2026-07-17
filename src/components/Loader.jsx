@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { prepareStrokePaths } from '../lib/handwriting'
 import { logoTrace } from '../content/logoPaths'
 
-const TRACE_MS = 3400 // time for the pen to trace the logo
+const TRACE_MS = 2800 // time for the pen to trace the logo
 const FILL_MS = 750 // outline → real logo crossfade
 const NAME_MS = 2000 // pause on the name before revealing the site
 const LIFT_MS = 550 // pen glide-away after the last stroke

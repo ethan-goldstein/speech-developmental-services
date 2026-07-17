@@ -19,9 +19,9 @@
 }
 
 @font-face {
-  font-family: 'Yuyu Short';
-  src: url('../fonts/YuyuShort-400.woff2') format('woff2');
-  font-weight: 400;
+  font-family: 'Caveat';
+  src: url('../fonts/Caveat-var.woff2') format('woff2');
+  font-weight: 400 700;
   font-display: swap;
 }
 
@@ -46,7 +46,7 @@
   --font: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-display: 'Montenegrin Gothic One', 'Times New Roman', serif;
   --font-slab: 'Kameron', Georgia, serif;
-  --font-hand: 'Yuyu Short', 'Comic Sans MS', cursive;
+  --font-hand: 'Caveat', 'Comic Sans MS', cursive;
 }
 
 * {
@@ -264,7 +264,7 @@ a {
   right: 0;
   text-align: center;
   font-family: var(--font-hand);
-  font-size: 17px;
+  font-size: 20px;
   color: var(--ink-3);
 }
 
@@ -366,7 +366,7 @@ a {
 
 .section-eyebrow {
   font-family: var(--font-hand);
-  font-size: 21px;
+  font-size: 25px;
   color: var(--ink-2);
   margin-bottom: 16px;
 }
@@ -439,45 +439,6 @@ a {
   left: -170px;
 }
 
-/* the "···" motif from the SDS logo, in ink */
-.hero-dots {
-  position: absolute;
-  top: 20%;
-  left: 11%;
-  display: flex;
-  gap: 14px;
-  pointer-events: none;
-}
-
-.hero-dots i {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--ink);
-  opacity: 0.25;
-  animation: dot-float 5.2s ease-in-out infinite;
-}
-
-.hero-dots i:nth-child(2) {
-  animation-delay: 0.5s;
-}
-
-.hero-dots i:nth-child(3) {
-  animation-delay: 1s;
-}
-
-@keyframes dot-float {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.18;
-  }
-  50% {
-    transform: translateY(-14px);
-    opacity: 0.5;
-  }
-}
-
 .hero-inner {
   position: relative;
   width: min(920px, calc(100% - 48px));
@@ -486,7 +447,7 @@ a {
 
 .hero-eyebrow {
   font-family: var(--font-hand);
-  font-size: clamp(18px, 2.4vw, 23px);
+  font-size: clamp(22px, 2.7vw, 27px);
   color: var(--ink-2);
   margin-bottom: 24px;
 }
@@ -503,7 +464,7 @@ a {
   display: inline-block;
   font-family: var(--font-hand);
   font-style: normal;
-  font-size: 0.92em;
+  font-size: 0.98em;
   color: var(--ink);
   border-bottom: 4px solid var(--brand);
   line-height: 1.25;
@@ -535,7 +496,7 @@ a {
   align-items: center;
   gap: 10px;
   font-family: var(--font-hand);
-  font-size: 15px;
+  font-size: 18px;
   color: var(--ink-3);
 }
 
@@ -598,7 +559,7 @@ a {
 .about-photo figcaption {
   padding: 14px 20px;
   font-family: var(--font-hand);
-  font-size: 17px;
+  font-size: 20px;
   color: var(--ink-2);
 }
 
@@ -624,7 +585,7 @@ a {
 
 .about-personal {
   font-family: var(--font-hand) !important;
-  font-size: 20px !important;
+  font-size: 24px !important;
   color: var(--ink-2) !important;
 }
 
@@ -791,7 +752,7 @@ a {
 
 .steps-heading {
   font-family: var(--font-hand);
-  font-size: clamp(24px, 2.8vw, 32px);
+  font-size: clamp(30px, 3.2vw, 40px);
   margin-bottom: 40px;
 }
 
@@ -1149,10 +1110,6 @@ a {
     gap: 12px;
     padding: 32px 12px;
   }
-
-  .hero-dots {
-    display: none;
-  }
 }
 
 @media (max-width: 480px) {
@@ -1175,7 +1132,6 @@ a {
     scroll-behavior: auto;
   }
 
-  .hero-dots i,
   .hero-scrollcue-line {
     animation: none;
   }
