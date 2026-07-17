@@ -675,7 +675,8 @@ a {
   color: rgba(16, 18, 30, 0.82);
 }
 
-.about-text p + p {
+/* each paragraph lives in its own reveal wrapper */
+.about-text > * + * {
   margin-top: 38px;
 }
 
