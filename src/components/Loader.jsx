@@ -3,10 +3,11 @@ import { motion } from 'framer-motion'
 import { prepareStrokePaths } from '../lib/handwriting'
 import { logoTrace } from '../content/logoPaths'
 
-const TRACE_MS = 2800 // time for the pen to trace the logo
-const FILL_MS = 750 // outline → real logo crossfade
-const NAME_MS = 2000 // pause on the name before revealing the site
-const LIFT_MS = 550 // pen glide-away after the last stroke
+const TRACE_MS = 1600 // time for the pen to trace the logo
+const FILL_MS = 450 // outline → real logo crossfade
+const NAME_MS = 550 // pause on the name before revealing the site
+const LIFT_MS = 300 // pen glide-away after the last stroke
+const LEAVE_MS = 550 // slide-up exit — whole intro lands ≈3s
 
 /* Intro: a 3D fountain pen traces the SDS logo in ink, the outline
    crossfades into the periwinkle logo, and the practice name fades in
@@ -33,7 +34,7 @@ export default function Loader({ onDone }) {
 
     const leave = () => {
       setLeaving(true)
-      leaveTimer = setTimeout(() => onDone?.(), 750)
+      leaveTimer = setTimeout(() => onDone?.(), LEAVE_MS)
       finished = true
     }
 
@@ -94,11 +95,10 @@ export default function Loader({ onDone }) {
         } else if (p >= 1 && liftStart === null) {
           liftStart = now
         }
-        if (p >= 1 && liftStart !== null && now - liftStart >= LIFT_MS * 0.4) {
+        // Fill starts the instant the last stroke lands; name follows the lift.
+        if (p >= 1 && liftStart !== null) {
           setFilled(true)
-        }
-        if (p >= 1 && liftStart !== null && now - liftStart >= LIFT_MS + FILL_MS) {
-          if (!finished && !nameTimer) showName()
+          if (now - liftStart >= LIFT_MS && !finished && !nameTimer) showName()
         }
         raf = requestAnimationFrame(frame)
       }
@@ -117,7 +117,7 @@ export default function Loader({ onDone }) {
         setNameVisible(true)
         nameTimer = setTimeout(() => {
           if (!finished) leave()
-        }, 700)
+        }, 500)
       }
     }
     window.addEventListener('keydown', skip)
@@ -141,7 +141,7 @@ export default function Loader({ onDone }) {
       className="loader"
       initial={{ y: 0 }}
       animate={leaving ? { y: '-100%' } : { y: 0 }}
-      transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1] }}
+      transition={{ duration: LEAVE_MS / 1000, ease: [0.76, 0, 0.24, 1] }}
       aria-label="Loading — Speech Developmental Services"
     >
       <canvas ref={canvasRef} className="loader-canvas" aria-hidden="true" />

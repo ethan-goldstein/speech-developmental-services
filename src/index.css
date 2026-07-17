@@ -205,7 +205,7 @@ a {
   height: auto;
   display: block;
   overflow: visible;
-  transition: opacity 0.7s ease;
+  transition: opacity 0.4s ease;
 }
 
 .loader-logo-img {
@@ -213,7 +213,7 @@ a {
   inset: 0;
   width: 100%;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.45s ease;
 }
 
 .loader-logo.is-filled .loader-logo-img {
@@ -229,8 +229,8 @@ a {
   opacity: 0;
   transform: translateY(14px);
   transition:
-    opacity 0.9s var(--ease),
-    transform 0.9s var(--ease);
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease);
 }
 
 .loader-name.is-visible {
