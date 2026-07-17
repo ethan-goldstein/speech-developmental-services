@@ -679,19 +679,6 @@ a {
   margin-top: 22px;
 }
 
-.about-connection {
-  font-family: var(--font-slab);
-  font-size: 20px !important;
-  color: var(--ink) !important;
-  border-left: 3px solid var(--brand-deep);
-  padding-left: 20px;
-}
-
-.about-personal {
-  font-size: 15.5px !important;
-  color: var(--muted) !important;
-}
-
 .approach {
   margin-top: 80px;
   max-width: 780px;

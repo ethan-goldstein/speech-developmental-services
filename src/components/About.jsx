@@ -52,10 +52,10 @@ export default function About() {
               <p>{about.why}</p>
             </Reveal>
             <Reveal delay={0.24}>
-              <p className="about-connection">{about.connection}</p>
+              <p>{about.connection}</p>
             </Reveal>
             <Reveal delay={0.3}>
-              <p className="about-personal">{about.personal}</p>
+              <p>{about.personal}</p>
             </Reveal>
           </div>
         </div>
