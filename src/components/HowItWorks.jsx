@@ -3,7 +3,7 @@ import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
 import { steps, settings, site } from '../content/data'
 import Icon from './Icons'
 import Reveal from './Reveal'
-import { scrollToId } from '../lib/scroll'
+import { goToBooking } from '../lib/scroll'
 
 export default function HowItWorks() {
   const reduced = useReducedMotion()
@@ -63,7 +63,7 @@ export default function HowItWorks() {
                 <h4>{step.title}</h4>
                 <p>{step.text}</p>
                 {i === 0 && (
-                  <button className="btn btn--primary" onClick={() => scrollToId('contact')}>
+                  <button className="btn btn--primary" onClick={goToBooking}>
                     Schedule Yours — It’s Free
                   </button>
                 )}

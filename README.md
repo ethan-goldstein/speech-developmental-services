@@ -33,6 +33,16 @@ publishes to GitHub Pages.
 (CNAME → `ethan-goldstein.github.io`), and nothing in the build needs to
 change — the Vite base is relative (`./`).
 
+## Booking form
+
+"Book a Free Consultation" opens a two-step form (`#book`) whose answers are
+emailed to Shana via [FormSubmit](https://formsubmit.co) — no backend needed.
+**One-time setup:** the first submission triggers an activation email to
+Shana@speechds.com; Shana must click the link once, after which all requests
+land straight in her inbox. If FormSubmit's AJAX endpoint is bot-challenged,
+the form falls back to a real POST (visitor passes the check, then returns to
+the site's confirmation screen).
+
 ## Content
 
 All copy, the headshot, and the logo come from the practice's intake PDF.

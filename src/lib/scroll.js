@@ -1,3 +1,8 @@
+/* Open the booking form view (hash-routed in App.jsx). */
+export function goToBooking() {
+  window.location.hash = 'book'
+}
+
 /* Smooth-scroll to a section id, preferring the Lenis instance when active. */
 export function scrollToId(id) {
   const el = document.getElementById(id)

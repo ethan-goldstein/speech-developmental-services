@@ -144,6 +144,14 @@ export const insurers = [
   { name: 'UHC Community Plan', color: '#00BED5' },
 ]
 
+// Options for the booking form (questions mirror the reference flow).
+export const bookingOptions = {
+  services: ['Speech therapy', 'Virtual parent coaching'],
+  who: ['My child', 'Myself', 'Someone else'],
+  states: ['Virginia', 'Maryland', 'Washington, D.C.', 'Florida', 'Other'],
+  insurance: [...insurers.map((i) => i.name), 'Private pay / Self-pay', 'Other'],
+}
+
 export const legal = {
   goodFaith:
     'You have the right to receive a Good Faith Estimate of what your services may cost.',

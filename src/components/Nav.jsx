@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, useScroll, useSpring } from 'framer-motion'
 import { site } from '../content/data'
-import { scrollToId } from '../lib/scroll'
+import { scrollToId, goToBooking } from '../lib/scroll'
 
 const LINKS = [
   { id: 'about', label: 'About' },
@@ -60,7 +60,7 @@ export default function Nav() {
           ))}
         </nav>
 
-        <button className="btn btn--primary btn--nav" onClick={() => scrollToId('contact')}>
+        <button className="btn btn--primary btn--nav" onClick={goToBooking}>
           Book a Free Consultation
         </button>
       </div>

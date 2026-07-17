@@ -10,9 +10,22 @@ import Insurance from './components/Insurance'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import BackToTop from './components/BackToTop'
+import Booking from './components/Booking'
 
 export default function App() {
   const [introDone, setIntroDone] = useState(false)
+  const isBookingHash = () => ['#book', '#booked'].includes(window.location.hash)
+  const [view, setView] = useState(isBookingHash() ? 'book' : 'home')
+
+  // Hash routing for the booking page (#book / #booked) — back/forward friendly.
+  useEffect(() => {
+    const onHash = () => {
+      setView(isBookingHash() ? 'book' : 'home')
+      window.scrollTo(0, 0)
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
 
   // Smooth scrolling for the whole page (started after the intro).
   useEffect(() => {
@@ -39,6 +52,15 @@ export default function App() {
       document.documentElement.style.overflow = ''
     }
   }, [introDone])
+
+  if (view === 'book') {
+    return (
+      <>
+        {!introDone && <Loader onDone={() => setIntroDone(true)} />}
+        <Booking />
+      </>
+    )
+  }
 
   return (
     <>
