@@ -5,7 +5,7 @@ import { logoTrace } from '../content/logoPaths'
 
 const TRACE_MS = 1600 // time for the pen to trace the logo
 const FILL_MS = 450 // outline → real logo crossfade
-const NAME_MS = 550 // pause on the name before revealing the site
+const NAME_MS = 1600 // let the name sit for a beat before revealing the site
 const LIFT_MS = 300 // pen glide-away after the last stroke
 const LEAVE_MS = 550 // slide-up exit — whole intro lands ≈3s
 
@@ -117,7 +117,7 @@ export default function Loader({ onDone }) {
         setNameVisible(true)
         nameTimer = setTimeout(() => {
           if (!finished) leave()
-        }, 500)
+        }, 1100)
       }
     }
     window.addEventListener('keydown', skip)
