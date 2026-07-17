@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { motion, useScroll, useSpring } from 'framer-motion'
 import { site } from '../content/data'
 import { scrollToId } from '../lib/scroll'
 
@@ -12,6 +13,9 @@ const LINKS = [
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const [active, setActive] = useState('')
+  const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.3 })
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -20,8 +24,24 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Scrollspy: highlight the section currently in view.
+  useEffect(() => {
+    const sections = LINKS.map((l) => document.getElementById(l.id)).filter(Boolean)
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setActive(e.target.id)
+        }
+      },
+      { rootMargin: '-38% 0px -55% 0px' }
+    )
+    sections.forEach((s) => obs.observe(s))
+    return () => obs.disconnect()
+  }, [])
+
   return (
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
+      <motion.span className="nav-progress" style={{ scaleX: progress }} aria-hidden="true" />
       <div className="nav-inner">
         <button className="nav-brand" onClick={() => scrollToId('top')} aria-label="Back to top">
           <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="nav-logo" />
@@ -30,7 +50,11 @@ export default function Nav() {
 
         <nav className="nav-links" aria-label="Sections">
           {LINKS.map((l) => (
-            <button key={l.id} className="nav-link" onClick={() => scrollToId(l.id)}>
+            <button
+              key={l.id}
+              className={`nav-link ${active === l.id ? 'is-active' : ''}`}
+              onClick={() => scrollToId(l.id)}
+            >
               {l.label}
             </button>
           ))}

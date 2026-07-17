@@ -10,10 +10,12 @@ export default function About() {
     target: photoRef,
     offset: ['start end', 'end start'],
   })
-  const photoY = useTransform(scrollYProgress, [0, 1], [40, -40])
+  const photoY = useTransform(scrollYProgress, [0, 1], [48, -48])
+  const photoRot = useTransform(scrollYProgress, [0, 1], [3.5, -3.5])
 
   return (
     <section className="section about" id="about">
+      <div className="section-orb section-orb--b" aria-hidden="true" />
       <div className="container">
         <Reveal>
           <p className="section-eyebrow">About</p>
@@ -25,10 +27,10 @@ export default function About() {
 
         <div className="about-grid">
           <div className="about-photo-col" ref={photoRef}>
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} three>
               <motion.figure
                 className="about-photo"
-                style={reduced ? undefined : { y: photoY }}
+                style={reduced ? undefined : { y: photoY, rotateZ: photoRot }}
               >
                 <img
                   src={`${import.meta.env.BASE_URL}headshot.jpg`}
@@ -60,7 +62,7 @@ export default function About() {
 
         <div className="pillars">
           {pillars.map((p, i) => (
-            <Reveal key={p.title} delay={0.08 * i} className="pillar">
+            <Reveal key={p.title} delay={0.08 * i} className="pillar" three>
               <span className="pillar-index">{String(i + 1).padStart(2, '0')}</span>
               <h3>{p.title}</h3>
               <p>{p.text}</p>

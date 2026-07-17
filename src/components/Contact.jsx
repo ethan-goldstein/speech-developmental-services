@@ -1,18 +1,26 @@
+import { useState } from 'react'
 import { site, socials } from '../content/data'
 import Icon from './Icons'
 import Reveal from './Reveal'
 
-const BRAND = {
-  instagram: '#E1306C',
-  linkedin: '#0A66C2',
-  facebook: '#1877F2',
-}
-
 export default function Contact() {
+  const [copied, setCopied] = useState(false)
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(site.email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
+    } catch {
+      /* clipboard unavailable — the mailto link still works */
+    }
+  }
+
   return (
     <section className="section contact" id="contact">
       <div className="container">
-        <Reveal className="contact-panel">
+        <Reveal className="contact-panel" three>
+          <div className="contact-aurora" aria-hidden="true" />
           <p className="section-eyebrow section-eyebrow--light">Contact</p>
           <h2 className="contact-title">
             Interested in helping
@@ -25,10 +33,19 @@ export default function Contact() {
           </p>
 
           <div className="contact-actions">
-            <a className="contact-mail" href={`mailto:${site.email}`}>
-              <Icon name="mail" size={22} />
-              {site.email}
-            </a>
+            <div className="contact-mail-row">
+              <a className="contact-mail" href={`mailto:${site.email}`}>
+                <Icon name="mail" size={22} />
+                {site.email}
+              </a>
+              <button
+                className={`contact-copy ${copied ? 'is-copied' : ''}`}
+                onClick={copyEmail}
+                aria-label="Copy email address"
+              >
+                {copied ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
             <a className="contact-phone" href={site.phoneHref}>
               <Icon name="phone" size={18} />
               {site.phone}
@@ -45,7 +62,6 @@ export default function Contact() {
                 className="contact-social"
                 aria-label={s.label}
                 title={`${s.label} — ${s.handle}`}
-                style={{ '--brand': BRAND[s.icon] }}
               >
                 <Icon name={s.icon} size={21} />
               </a>

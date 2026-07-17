@@ -9,6 +9,7 @@ import HowItWorks from './components/HowItWorks'
 import Insurance from './components/Insurance'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import BackToTop from './components/BackToTop'
 
 export default function App() {
   const [introDone, setIntroDone] = useState(false)
@@ -52,6 +53,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </>
   )
 }

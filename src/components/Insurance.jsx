@@ -1,4 +1,4 @@
-import { insurers, legal, site } from '../content/data'
+import { insurers, legal } from '../content/data'
 import Reveal from './Reveal'
 import { scrollToId } from '../lib/scroll'
 
@@ -21,7 +21,7 @@ export default function Insurance() {
         </div>
 
         <div className="cost-cards">
-          <Reveal delay={0.1} className="cost-card">
+          <Reveal delay={0.1} className="cost-card" three>
             <h3>Private Pay</h3>
             <p>
               Please contact for private pay rates and available payment options.
@@ -31,15 +31,10 @@ export default function Insurance() {
               Ask About Rates
             </button>
           </Reveal>
-          <Reveal delay={0.18} className="cost-card cost-card--legal">
+          <Reveal delay={0.18} className="cost-card cost-card--legal" three>
             <h3>Good Faith Estimate</h3>
             <p>{legal.goodFaith}</p>
-            <a
-              className="text-link"
-              href={legal.noSurprisesUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a className="text-link" href={legal.noSurprisesUrl} target="_blank" rel="noreferrer">
               Learn about the No Surprises Act ↗
             </a>
           </Reveal>
