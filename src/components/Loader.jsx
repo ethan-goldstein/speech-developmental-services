@@ -5,7 +5,7 @@ import { logoTrace } from '../content/logoPaths'
 
 const TRACE_MS = 1600 // time for the pen to trace the logo
 const FILL_MS = 450 // outline → real logo crossfade
-const NAME_MS = 2600 // let the name sit before revealing the site
+const NAME_MS = 1000 // let the name sit before revealing the site
 const LIFT_MS = 300 // pen glide-away after the last stroke
 const LEAVE_MS = 550 // slide-up exit — whole intro lands ≈3s
 
@@ -117,7 +117,7 @@ export default function Loader({ onDone }) {
         setNameVisible(true)
         nameTimer = setTimeout(() => {
           if (!finished) leave()
-        }, 1800)
+        }, 800)
       }
     }
     window.addEventListener('keydown', skip)
@@ -142,7 +142,7 @@ export default function Loader({ onDone }) {
       initial={{ y: 0 }}
       animate={leaving ? { y: '-100%' } : { y: 0 }}
       transition={{ duration: LEAVE_MS / 1000, ease: [0.76, 0, 0.24, 1] }}
-      aria-label="Loading — Speech Developmental Services"
+      aria-label="Loading Speech Developmental Services"
     >
       <canvas ref={canvasRef} className="loader-canvas" aria-hidden="true" />
       <div className="loader-stack">

@@ -64,7 +64,7 @@ export default function HowItWorks() {
                 <p>{step.text}</p>
                 {i === 0 && (
                   <button className="btn btn--primary" onClick={goToBooking}>
-                    Schedule Yours — It’s Free
+                    Schedule Yours, It’s Free
                   </button>
                 )}
               </div>

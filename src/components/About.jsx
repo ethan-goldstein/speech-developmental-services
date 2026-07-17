@@ -60,12 +60,14 @@ export default function About() {
           </div>
         </div>
 
-        <div className="pillars">
+        <div className="approach">
+          <Reveal>
+            <h3 className="approach-heading">My approach</h3>
+          </Reveal>
           {pillars.map((p, i) => (
-            <Reveal key={p.title} delay={0.08 * i} className="pillar" three>
-              <span className="pillar-index">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
+            <Reveal key={p.title} delay={0.06 * i} className="approach-row" as="dl">
+              <dt>{p.title}</dt>
+              <dd>{p.text}</dd>
             </Reveal>
           ))}
         </div>

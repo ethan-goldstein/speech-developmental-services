@@ -63,7 +63,7 @@ export const pillars = [
 export const services = [
   {
     title: 'Receptive & Expressive Language',
-    text: 'Building understanding and use of language — from first words to full conversations.',
+    text: 'Building understanding and use of language, from first words to full conversations.',
     icon: 'chat',
   },
   {
@@ -83,7 +83,7 @@ export const services = [
   },
   {
     title: 'AAC',
-    text: 'Augmentative & Alternative Communication — finding every child’s voice, in every form it takes.',
+    text: 'Augmentative & Alternative Communication: finding every child’s voice, in every form it takes.',
     icon: 'tablet',
   },
   {
@@ -112,7 +112,7 @@ export const steps = [
   {
     n: '03',
     title: 'Begin Speech Therapy!',
-    text: 'Sessions are 45 minutes long and are scheduled based on your child’s needs — once a week, twice a week, every other week, or monthly.',
+    text: 'Sessions are 45 minutes long and are scheduled based on your child’s needs: once a week, twice a week, every other week, or monthly.',
   },
 ]
 

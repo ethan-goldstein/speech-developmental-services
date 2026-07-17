@@ -68,7 +68,7 @@ export default function Hero() {
         </motion.h1>
         <motion.p className="hero-sub" {...fadeUp(0.28)}>
           Individualized, functional, and neurodiversity-affirming pediatric speech
-          therapy with {site.founder}, {site.credentials} — in the clinic, in the
+          therapy with {site.founder}, {site.credentials}, offered in the clinic, in the
           community, or by secure telehealth.
         </motion.p>
         <motion.div className="hero-ctas" {...fadeUp(0.4)}>

@@ -58,7 +58,7 @@ export default function Booking() {
     'Last name': form.lastName,
     'Phone': form.phone,
     'Email': form.email,
-    'Message': form.message || '—',
+    'Message': form.message || 'None',
   })
 
   /* Fallback: a real top-level form POST to the relay. Unlike fetch, a full
@@ -71,7 +71,7 @@ export default function Booking() {
     const returnUrl = `${window.location.origin}${window.location.pathname}#booked`
     const all = {
       ...fields(),
-      _subject: `New consultation request — ${form.firstName} ${form.lastName}`,
+      _subject: `New consultation request from ${form.firstName} ${form.lastName}`,
       _template: 'table',
       _next: returnUrl,
     }
@@ -98,7 +98,7 @@ export default function Booking() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         signal: controller.signal,
         body: JSON.stringify({
-          _subject: `New consultation request — ${form.firstName} ${form.lastName}`,
+          _subject: `New consultation request from ${form.firstName} ${form.lastName}`,
           _template: 'table',
           _captcha: 'false',
           ...fields(),
@@ -284,7 +284,7 @@ export default function Booking() {
             <h1 className="booking-title">Request sent!</h1>
             <p className="booking-sub">
               Thank you{form.firstName ? `, ${form.firstName}` : ''}. Your booking
-              request is on its way to {site.founder} — she’ll reach out shortly to
+              request is on its way to {site.founder}. She’ll reach out shortly to
               schedule your free 15-minute consultation.
             </p>
             <a className="btn btn--primary btn--lg" href="#top">

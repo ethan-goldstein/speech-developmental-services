@@ -10,7 +10,7 @@ export default function Footer() {
           className="footer-logo"
         />
         <p className="footer-coi">
-          <strong>Conflict of Interest Statement — </strong>
+          <strong>Conflict of Interest Statement: </strong>
           {legal.conflictOfInterest}
         </p>
         <div className="footer-meta">
