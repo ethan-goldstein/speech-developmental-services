@@ -71,6 +71,23 @@ export const ICONS = {
       <path d="M3 18.5h18" />
     </g>
   ),
+  target: (
+    <g {...base}>
+      <circle cx="12" cy="12" r="8" />
+      <circle cx="12" cy="12" r="3.5" />
+    </g>
+  ),
+  home: (
+    <g {...base}>
+      <path d="m4 11.5 8-7 8 7" />
+      <path d="M6.5 9.5V19h11V9.5" />
+    </g>
+  ),
+  heart: (
+    <g {...base}>
+      <path d="M12 19.5S5.2 15.1 3.9 11.2A4.6 4.6 0 0 1 12 7.6a4.6 4.6 0 0 1 8.1 3.6C18.8 15.1 12 19.5 12 19.5Z" />
+    </g>
+  ),
   mail: (
     <g {...base}>
       <rect x="3.5" y="5.5" width="17" height="13" rx="2.5" />

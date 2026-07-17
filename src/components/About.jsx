@@ -2,6 +2,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { useRef } from 'react'
 import { about, pillars, site } from '../content/data'
 import Reveal from './Reveal'
+import Icon from './Icons'
 
 export default function About() {
   const reduced = useReducedMotion()
@@ -64,12 +65,17 @@ export default function About() {
           <Reveal>
             <h3 className="approach-heading">My approach</h3>
           </Reveal>
-          {pillars.map((p, i) => (
-            <Reveal key={p.title} delay={0.06 * i} className="approach-row" as="dl">
-              <dt>{p.title}</dt>
-              <dd>{p.text}</dd>
-            </Reveal>
-          ))}
+          <div className="approach-grid">
+            {pillars.map((p, i) => (
+              <Reveal key={p.title} delay={0.09 * i} className="approach-card" three>
+                <span className="approach-icon">
+                  <Icon name={['target', 'home', 'heart'][i]} size={24} />
+                </span>
+                <h4>{p.title}</h4>
+                <p>{p.text}</p>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>
