@@ -526,7 +526,7 @@ a {
 
 .hero-title em {
   font-style: normal;
-  background: var(--grad);
+  background: linear-gradient(118deg, #a06b28 0%, #c99a45 45%, #e8c98a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -777,17 +777,17 @@ a {
   width: 54px;
   height: 54px;
   border-radius: 16px;
-  background: rgba(126, 159, 255, 0.14);
-  color: var(--brand-deep);
+  background: rgba(16, 18, 30, 0.06);
+  color: var(--ink);
   transition: background 0.35s ease, color 0.35s ease, transform 0.35s var(--ease),
     box-shadow 0.35s ease;
 }
 
 .service-card:hover .service-icon {
-  background: var(--grad);
+  background: var(--ink);
   color: #fff;
   transform: rotate(-5deg) scale(1.08);
-  box-shadow: var(--glow);
+  box-shadow: 0 10px 28px rgba(16, 18, 30, 0.3);
 }
 
 .service-card h3 {
@@ -841,13 +841,13 @@ a {
   height: 44px;
   flex: none;
   border-radius: 13px;
-  background: rgba(126, 159, 255, 0.14);
-  color: var(--brand-deep);
+  background: rgba(16, 18, 30, 0.06);
+  color: var(--ink);
   transition: background 0.35s ease, color 0.35s ease;
 }
 
 .setting-chip:hover .setting-icon {
-  background: var(--grad);
+  background: var(--ink);
   color: #fff;
 }
 
