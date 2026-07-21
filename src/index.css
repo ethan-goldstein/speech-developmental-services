@@ -1236,13 +1236,6 @@ a {
   transform: scale(1.1);
 }
 
-.footer-coi {
-  max-width: 74ch;
-  font-size: 12.5px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.55);
-}
-
 .footer-meta {
   display: flex;
   align-items: center;

@@ -5,7 +5,7 @@ export const site = {
   shortName: 'SDS',
   founder: 'Shana Kilcawley',
   title: 'Founder, Speech Language Pathologist',
-  credentials: 'CCC-SLP',
+  credentials: 'M.S., CCC-SLP',
   email: 'Shana@speechds.com',
   phone: '(850) 529-6518',
   phoneHref: 'tel:+18505296518',
@@ -68,7 +68,7 @@ export const services = [
   },
   {
     title: 'Social-Pragmatic Language',
-    text: 'Supporting connection, play, and communication with peers and family.',
+    text: 'Supporting connection, play and meaningful participation in everyday social interactions.',
     icon: 'people',
   },
   {
@@ -83,7 +83,7 @@ export const services = [
   },
   {
     title: 'AAC',
-    text: 'Augmentative & Alternative Communication: finding every child’s voice, in every form it takes.',
+    text: 'Supporting your child’s voice, in every form it takes.',
     icon: 'tablet',
   },
   {
@@ -156,6 +156,4 @@ export const legal = {
   goodFaith:
     'You have the right to receive a Good Faith Estimate of what your services may cost.',
   noSurprisesUrl: 'https://www.cms.gov/nosurprises',
-  conflictOfInterest:
-    'The views and opinions expressed on this website are solely my own and do not necessarily reflect those of any organization, employer, client, or institution with which I am affiliated.',
 }

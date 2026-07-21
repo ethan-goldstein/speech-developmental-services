@@ -157,7 +157,7 @@ export default function Loader({ onDone }) {
         </div>
         <div className={`loader-name ${nameVisible ? 'is-visible' : ''}`}>
           <span className="loader-name-main">Shana Kilcawley</span>
-          <span className="loader-name-sub">CCC-SLP · Speech Developmental Services</span>
+          <span className="loader-name-sub">M.S., CCC-SLP · Speech Developmental Services</span>
         </div>
       </div>
       <div className="loader-skip">click anywhere to skip</div>
