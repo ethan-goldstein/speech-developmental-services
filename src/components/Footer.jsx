@@ -1,4 +1,4 @@
-import { site } from '../content/data'
+import { legal, site } from '../content/data'
 
 export default function Footer() {
   return (
@@ -9,6 +9,10 @@ export default function Footer() {
           alt={site.name}
           className="footer-logo"
         />
+        <p className="footer-coi">
+          <strong>Conflict of Interest Statement: </strong>
+          {legal.conflictOfInterest}
+        </p>
         <div className="footer-meta">
           <span>
             © {new Date().getFullYear()} {site.name}

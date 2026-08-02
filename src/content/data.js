@@ -156,4 +156,6 @@ export const legal = {
   goodFaith:
     'You have the right to receive a Good Faith Estimate of what your services may cost.',
   noSurprisesUrl: 'https://www.cms.gov/nosurprises',
+  conflictOfInterest:
+    'The views and opinions expressed on this website are solely my own and do not necessarily reflect those of any organization, employer, client, or institution with which I am affiliated.',
 }

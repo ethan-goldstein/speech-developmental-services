@@ -3,7 +3,7 @@
 Professional site for **Shana Kilcawley, CCC-SLP** — pediatric speech therapy in
 Arlington, VA and by secure telehealth in VA, MD, DC, and FL.
 
-**Live:** https://ethan-goldstein.github.io/speech-developmental-services/
+**Live:** https://speechdservices.com (also at https://ethan-goldstein.github.io/speech-developmental-services/)
 
 ## Highlights
 
@@ -29,9 +29,11 @@ npm run build    # production bundle in dist/
 Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and
 publishes to GitHub Pages.
 
-**Custom domain later:** add the domain under repo Settings → Pages, point DNS
-(CNAME → `ethan-goldstein.github.io`), and nothing in the build needs to
-change — the Vite base is relative (`./`).
+**Custom domain:** `speechdservices.com` (set in repo Pages settings +
+`public/CNAME`). DNS at the registrar must have four apex A records
+(185.199.108.153 / .109.153 / .110.153 / .111.153) and a `www` CNAME to
+`ethan-goldstein.github.io`. The Vite base is relative (`./`), so no build
+changes are needed.
 
 ## Booking form
 
