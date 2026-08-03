@@ -9,10 +9,7 @@ export default function Footer() {
           alt={site.name}
           className="footer-logo"
         />
-        <p className="footer-coi">
-          <strong>Conflict of Interest Statement: </strong>
-          {legal.conflictOfInterest}
-        </p>
+        <p className="footer-coi">{legal.conflictOfInterest}</p>
         <div className="footer-meta">
           <span>
             © {new Date().getFullYear()} {site.name}
